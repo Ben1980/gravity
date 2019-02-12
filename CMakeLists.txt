@@ -24,4 +24,5 @@ target_include_directories(Catch
     INTERFACE
     ${CATCH_INCLUDE_DIR})
 
-add_subdirectory(solver src/solver)
+include(CTest)
+add_subdirectory(solver solver)
