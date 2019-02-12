@@ -10,7 +10,7 @@ project(gravity VERSION 0.1.0
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/")
 include(GNUInstallDirs)
-find_package(Catch 2.6.0)
+find_package(Catch 2.6.0 REQUIRED)
 if(CATCH_FOUND)
     message(STATUS "Building interpreter tests using Catch v${CATCH_VERSION}")
 else()

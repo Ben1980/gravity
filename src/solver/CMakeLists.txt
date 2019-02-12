@@ -9,4 +9,5 @@ target_include_directories(solver
 add_executable(solverTest test/test-main.cpp)
 target_link_libraries(solverTest Catch)
 
+enable_testing()
 add_test(NAME solverTest COMMAND solverTest)
