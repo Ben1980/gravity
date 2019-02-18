@@ -1,6 +1,7 @@
+#include <string>
 
 class HelloWorld
 {
 public:
-    void helloWorld();
+    std::string helloWorld();
 };
