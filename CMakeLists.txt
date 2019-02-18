@@ -8,21 +8,9 @@ project(gravity VERSION 0.1.0
     DESCRIPTION "N-Body-Problem project of https://thoughts-on-cpp.com"
     LANGUAGES CXX)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/")
-include(GNUInstallDirs)
-find_package(Catch 2.6.0 REQUIRED)
-if(CATCH_FOUND)
-    message(STATUS "Building interpreter tests using Catch v${CATCH_VERSION}")
-else()
-    message(STATUS "Catch not detected. Interpreter tests will be skipped. Install Catch headers"
-        " manually or use `cmake -DDOWNLOAD_CATCH=1` to fetch them automatically.")
-    return()
-endif()
-
-add_library(Catch INTERFACE)
-target_include_directories(Catch 
-    INTERFACE
-    ${CATCH_INCLUDE_DIR})
+add_library(Catch2 INTERFACE)
+target_include_directories(Catch2 INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/extern/catch2)
 
 include(CTest)
 add_subdirectory(solver solver)
+add_subdirectory(solverTest solverTest)

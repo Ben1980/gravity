@@ -1,7 +1,6 @@
 #include "solver.h"
-#include <iostream>
 
-void HelloWorld::helloWorld()
+std::string HelloWorld::helloWorld()
 {
-    std::cout << "Hello World!" << std::endl;
+    return "Hello World!";
 };
