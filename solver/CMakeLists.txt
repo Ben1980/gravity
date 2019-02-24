@@ -1,6 +1,6 @@
 add_library(solver
     SHARED
-    src/solver.cpp)
+    src/solver.cpp include/particle.h)
 
 target_include_directories(solver 
     PUBLIC 
