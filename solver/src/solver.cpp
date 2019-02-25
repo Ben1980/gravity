@@ -1,6 +1,7 @@
 #include "solver.h"
+#include "particle.h"
 
-std::string HelloWorld::helloWorld()
+std::vector<Particle> Solver::solve(const std::vector<Particle> &particles, double epsilon) const
 {
-    return "Hello World!";
-};
+    return {};
+}

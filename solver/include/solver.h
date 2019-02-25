@@ -1,7 +1,13 @@
-#include <string>
+#ifndef SOLVER_H
+#define SOLVER_H
 
-class HelloWorld
-{
+#include <vector>
+
+class Particle;
+
+class Solver {
 public:
-    std::string helloWorld();
+    std::vector<Particle> solve(const std::vector<Particle> &particles, double epsilon) const;
 };
+
+#endif
