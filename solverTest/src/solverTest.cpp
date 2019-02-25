@@ -2,25 +2,28 @@
 #include "solver.h"
 #include "particle.h"
 
+#include "particleBuilder.h"
 #include <vector>
 
 TEST_CASE( "Explicit euler algorithm with two mass points", "[euler]" ) {
 
     Solver solver;
 
-    Particle particleA = ParticleBuilder()
-            .position()
-            .velocity()
-            .acceleration()
-            .mass()
-            .build();
+    std::unique_ptr<ParticleBuilder> particleBuilder = std::make_unique<ParticleBuilder>();
 
-    Particle particleB = ParticleBuilder()
-            .position()
-            .velocity()
-            .acceleration()
-            .mass()
-            .build();
+    Particle particleA = particleBuilder
+            ->position()
+            ->velocity()
+            ->acceleration()
+            ->mass()
+            ->build();
+
+    Particle particleB = particleBuilder
+            ->position()
+            ->velocity()
+            ->acceleration()
+            ->mass()
+            ->build();
 
     std::vector<Particle> particles = { particleA, particleB };
 
@@ -29,6 +32,6 @@ TEST_CASE( "Explicit euler algorithm with two mass points", "[euler]" ) {
     SECTION( "Two still standing mass points are attracting each other" ) {
         std::vector<Particle> result = solver.solve(particles, EPSILON);
 
-
+        REQUIRE(false);
     }
 }
