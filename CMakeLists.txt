@@ -14,3 +14,5 @@ target_include_directories(Catch2 INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/extern/c
 include(CTest)
 add_subdirectory(solver solver)
 add_subdirectory(solverTest solverTest)
+
+set_property(TARGET solver solverTest PROPERTY CXX_STANDARD 17)

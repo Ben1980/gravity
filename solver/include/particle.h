@@ -1,8 +1,17 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
-struct Particle {
+#include "types.h"
 
+struct Particle {
+    double mass;
+    Vector2D acceleration;
+    Vector2D velocity;
+    Vector2D position;
+
+    Particle() : mass(0) {}
+    Particle(double mass, const Vector2D &acceleration, const Vector2D &velocity, const Vector2D &position)
+        : mass(mass), acceleration(acceleration), velocity(velocity), position(position) {}
 };
 
 #endif
