@@ -1,28 +1,31 @@
 #include "particleBuilder.h"
 #include "particle.h"
 
-ParticleBuilder * ParticleBuilder::position()
+ParticleBuilder & ParticleBuilder::position(const Vector2D &position)
 {
-    return this;
+    mPosition = position;
+    return *this;
 }
 
-ParticleBuilder * ParticleBuilder::velocity()
+ParticleBuilder & ParticleBuilder::velocity(const Vector2D &velocity)
 {
-    return this;
+    mVelocity = velocity;
+    return *this;
 }
 
-ParticleBuilder * ParticleBuilder::acceleration()
+ParticleBuilder & ParticleBuilder::acceleration(const Vector2D &acceleration)
 {
-    return this;
+    mAcceleration = acceleration;
+    return *this;
 }
 
-ParticleBuilder * ParticleBuilder::mass()
+ParticleBuilder & ParticleBuilder::mass(double mass)
 {
-    return this;
+    mMass = mass;
+    return *this;
 }
 
-Particle ParticleBuilder::build()
+Particle ParticleBuilder::build() const
 {
-    return {};
+    return {mMass, mAcceleration, mVelocity, mPosition};
 }
-
