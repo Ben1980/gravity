@@ -12,6 +12,17 @@ struct Particle {
     Particle() : mass(0) {}
     Particle(double mass, const Vector2D &acceleration, const Vector2D &velocity, const Vector2D &position)
         : mass(mass), acceleration(acceleration), velocity(velocity), position(position) {}
+
+    bool operator==(const Particle &rhs) const {
+        return mass == rhs.mass &&
+               acceleration == rhs.acceleration &&
+               velocity == rhs.velocity &&
+               position == rhs.position;
+    }
+
+    bool operator!=(const Particle &rhs) const {
+        return !(rhs == *this);
+    }
 };
 
 #endif
