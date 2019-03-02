@@ -20,13 +20,13 @@ std::vector<Particle> Solver::calculateAcceleration(const std::vector<Particle> 
     std::vector<Particle> solution(particles.size());
 
     std::transform(begin(particles), end(particles), begin(solution), [&particles](const Particle &particle) {
-        return accumulateAcceleration(particles, particle, G);
+        return AccumulateAcceleration(particles, particle, G);
     });
 
     return solution;
 }
 
-Particle Solver::accumulateAcceleration(const std::vector<Particle> &particles, const Particle &particle, double G)
+Particle Solver::AccumulateAcceleration(const std::vector<Particle> &particles, const Particle &particle, double G)
 {
     Particle particleA = particle;
     const double e3 = EPSILON*EPSILON*EPSILON;
@@ -45,7 +45,7 @@ Particle Solver::accumulateAcceleration(const std::vector<Particle> &particles, 
     return particleA;
 }
 
-const double Solver::CalculateEquivalentMass(const Particle &particleA, const Particle &particleB) {
+double Solver::CalculateEquivalentMass(const Particle &particleA, const Particle &particleB) {
     const double massA = particleA.mass;
     const double massB = particleB.mass;
 

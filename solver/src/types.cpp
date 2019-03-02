@@ -5,11 +5,13 @@
 #include <assert.h>
 
 bool Vector2D::operator==(const Vector2D &rhs) const {
-    if(fabs(x) > 0 && fabs(rhs.x) <= std::numeric_limits<double>::min()) return false;
-    if(fabs(y) > 0 && fabs(rhs.y) <= std::numeric_limits<double>::min()) return false;
+    auto equalZero = std::numeric_limits<double>::min();
 
-    return fabs((x / rhs.x) - 1) <= std::numeric_limits<double>::min() &&
-           fabs((y / rhs.y) - 1) <= std::numeric_limits<double>::min();
+    if(fabs(x) > 0 && fabs(rhs.x) <= equalZero) return false;
+    if(fabs(y) > 0 && fabs(rhs.y) <= equalZero) return false;
+
+    return fabs((x / rhs.x) - 1) <= equalZero &&
+           fabs((y / rhs.y) - 1) <= equalZero;
 }
 
 bool Vector2D::operator!=(const Vector2D &rhs) const {
