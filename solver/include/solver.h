@@ -2,12 +2,24 @@
 #define SOLVER_H
 
 #include <vector>
+#include "types.h"
 
 class Particle;
 
 class Solver {
 public:
-    std::vector<Particle> solve(const std::vector<Particle> &particles, double epsilon) const;
+    explicit Solver(double mEpsilon);
+
+    std::vector<Particle> solve(const std::vector<Particle> &particles) const;
+
+private:
+    std::vector<Particle> calculateAcceleration(const std::vector<Particle> &particles) const;
+    static Particle accumulateAcceleration(const std::vector<Particle> &particles, const Particle &particle, double G);
+    static const double CalculateEquivalentMass(const Particle &particleA, const Particle &particleB);
+
+    static const double G;
+    static const double EPSILON;
+    double mEpsilon;
 };
 
 #endif

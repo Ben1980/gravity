@@ -19,7 +19,8 @@ Particle GenerateStandardParticle(double xPosition, double yPosition)
 
 TEST_CASE( "Explicit euler algorithm with two point mass", "[euler]" )
 {
-    Solver solver;
+    const double EPSILON = 1e-3;
+    Solver solver(EPSILON);
 
     const std::vector<Particle> particlesX = { GenerateStandardParticle(0.5, 0),
                                                GenerateStandardParticle(-0.5, 0)};
@@ -27,15 +28,13 @@ TEST_CASE( "Explicit euler algorithm with two point mass", "[euler]" )
     const std::vector<Particle> particlesY = { GenerateStandardParticle(0, 0.5),
                                                GenerateStandardParticle(0, -0.5)};
 
-    const double EPSILON = 1e-3;
-
     //Solution
     const double acceleration = -0.6674079993; //m/s^2
     const double velocity = -0.06674079993; //m/s
     const double position = 0.48665184; //m
 
     SECTION( "Two still standing point mass are attracting each other in x-direction" ) {
-        std::vector<Particle> result = solver.solve(particlesX, EPSILON);
+        std::vector<Particle> result = solver.solve(particlesX);
 
         Particle &particle = result.front();
         REQUIRE(particle.acceleration.x == Approx(acceleration));
@@ -49,7 +48,7 @@ TEST_CASE( "Explicit euler algorithm with two point mass", "[euler]" )
     }
 
     SECTION( "Two still standing point mass are attracting each other in y-direction" ) {
-        std::vector<Particle> result = solver.solve(particlesY, EPSILON);
+        std::vector<Particle> result = solver.solve(particlesY);
 
         Particle &particle = result.front();
         REQUIRE(particle.acceleration.y == Approx(acceleration));
