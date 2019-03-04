@@ -2,6 +2,7 @@
 #define PARTICLEBUILDER_H
 
 #include "types.h"
+#include <vector>
 
 class Particle;
 
@@ -14,6 +15,7 @@ public:
     ParticleBuilder & acceleration(const Vector2D &acceleration);
     ParticleBuilder & mass(double mass);
     Particle build() const;
+    std::vector<Particle> build(size_t numberOfParticles);
 
 private:
     double mMass;

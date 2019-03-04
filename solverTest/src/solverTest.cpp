@@ -59,3 +59,27 @@ TEST_CASE( "Explicit euler algorithm with two point mass", "[euler]" ) {
         REQUIRE(particle.getPosition().y == Approx(Inverse(position)));
     }
 }
+
+TEST_CASE("Benchmarking euler", "[benchmark]") {
+    const double EPSILON = 0.1;
+    Solver solver(EPSILON);
+
+    ParticleBuilder particleBuilder;
+    std::vector<Particle> particles = particleBuilder.build(100);
+    BENCHMARK("Benchmarking with 100 particles") {
+        particles = solver.solve(particles);
+    }
+    REQUIRE(true);
+
+    particles = particleBuilder.build(1000);
+    BENCHMARK("Benchmarking with 1000 particles") {
+        particles = solver.solve(particles);
+    }
+    REQUIRE(true);
+
+    particles = particleBuilder.build(10000);
+    BENCHMARK("Benchmarking with 10K particles") {
+        particles = solver.solve(particles);
+    }
+    REQUIRE(true);
+}
