@@ -3,15 +3,13 @@
 #include <cmath>
 #include <types.h>
 #include <assert.h>
+#include <limits>
 
 bool Vector2D::operator==(const Vector2D &rhs) const {
     auto equalZero = std::numeric_limits<double>::min();
 
-    if(fabs(x) > 0 && fabs(rhs.x) <= equalZero) return false;
-    if(fabs(y) > 0 && fabs(rhs.y) <= equalZero) return false;
-
-    return fabs((x / rhs.x) - 1) <= equalZero &&
-           fabs((y / rhs.y) - 1) <= equalZero;
+    return fabs(x - rhs.x) <= equalZero &&
+           fabs(y - rhs.y) <= equalZero;
 }
 
 bool Vector2D::operator!=(const Vector2D &rhs) const {
@@ -19,11 +17,7 @@ bool Vector2D::operator!=(const Vector2D &rhs) const {
 }
 
 double Vector2D::length() const {
-    const double sumOfSquares = x*x +y*y;
-
-    assert(sumOfSquares >= 0);
-
-    return sqrt(sumOfSquares);
+    return sqrt(x*x + y*y);
 }
 
 Vector2D& Vector2D::operator-=(const Vector2D& rhs) {

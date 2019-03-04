@@ -14,7 +14,9 @@ public:
 
 private:
     std::vector<Particle> calculateAcceleration(const std::vector<Particle> &particles) const;
-    static Particle AccumulateAcceleration(const std::vector<Particle> &particles, const Particle &particle, double G);
+    std::vector<Particle> calculateVelocity(const std::vector<Particle> &particles) const;
+    std::vector<Particle> calculatePosition(const std::vector<Particle> &particles) const;
+    static Particle AccumulateAcceleration(const std::vector<Particle> &particles, const Particle &particle);
     static double CalculateEquivalentMass(const Particle &particleA, const Particle &particleB);
 
     static const double G;

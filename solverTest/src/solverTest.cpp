@@ -7,8 +7,7 @@
 
 double Inverse(double value) { return -value; }
 
-Particle GenerateStandardParticle(double xPosition, double yPosition)
-{
+Particle GenerateStandardParticle(double xPosition, double yPosition) {
     ParticleBuilder particleBuilder;
 
     return particleBuilder
@@ -17,9 +16,8 @@ Particle GenerateStandardParticle(double xPosition, double yPosition)
             .build();
 }
 
-TEST_CASE( "Explicit euler algorithm with two point mass", "[euler]" )
-{
-    const double EPSILON = 1e-3;
+TEST_CASE( "Explicit euler algorithm with two point mass", "[euler]" ) {
+    const double EPSILON = 0.1;
     Solver solver(EPSILON);
 
     const std::vector<Particle> particlesX = { GenerateStandardParticle(0.5, 0),
@@ -37,27 +35,27 @@ TEST_CASE( "Explicit euler algorithm with two point mass", "[euler]" )
         std::vector<Particle> result = solver.solve(particlesX);
 
         Particle &particle = result.front();
-        REQUIRE(particle.acceleration.x == Approx(acceleration));
-        REQUIRE(particle.velocity.x == Approx(velocity));
-        REQUIRE(particle.position.x == Approx(position));
+        CHECK(particle.getAcceleration().x == Approx(acceleration));
+        CHECK(particle.getVelocity().x == Approx(velocity));
+        CHECK(particle.getPosition().x == Approx(position));
 
         particle = result.back();
-        REQUIRE(particle.acceleration.x == Approx(Inverse(acceleration)));
-        REQUIRE(particle.velocity.x == Approx(Inverse(velocity)));
-        REQUIRE(particle.position.x == Approx(Inverse(position)));
+        CHECK(particle.getAcceleration().x == Approx(Inverse(acceleration)));
+        CHECK(particle.getVelocity().x == Approx(Inverse(velocity)));
+        REQUIRE(particle.getPosition().x == Approx(Inverse(position)));
     }
 
     SECTION( "Two still standing point mass are attracting each other in y-direction" ) {
         std::vector<Particle> result = solver.solve(particlesY);
 
         Particle &particle = result.front();
-        REQUIRE(particle.acceleration.y == Approx(acceleration));
-        REQUIRE(particle.velocity.y == Approx(velocity));
-        REQUIRE(particle.position.y == Approx(position));
+        CHECK(particle.getAcceleration().y == Approx(acceleration));
+        CHECK(particle.getVelocity().y == Approx(velocity));
+        CHECK(particle.getPosition().y == Approx(position));
 
         particle = result.back();
-        REQUIRE(particle.acceleration.y == Approx(Inverse(acceleration)));
-        REQUIRE(particle.velocity.y == Approx(Inverse(velocity)));
-        REQUIRE(particle.position.y == Approx(Inverse(position)));
+        CHECK(particle.getAcceleration().y == Approx(Inverse(acceleration)));
+        CHECK(particle.getVelocity().y == Approx(Inverse(velocity)));
+        REQUIRE(particle.getPosition().y == Approx(Inverse(position)));
     }
 }

@@ -1,8 +1,6 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-#include <cmath>
-
 struct Vector2D {
     double x;
     double y;
