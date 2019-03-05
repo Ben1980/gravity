@@ -2,6 +2,7 @@
 #include <random>
 #include <functional>
 #include <chrono>
+#include <cassert>
 
 size_t Particle::IDCounter = 0;
 
@@ -12,6 +13,7 @@ Particle::Particle()
 
 Particle::Particle(double mass, const Vector2D &acceleration, const Vector2D &velocity, const Vector2D &position)
         : mass(mass), acceleration(acceleration), velocity(velocity), position(position) {
+    assert(mass > 0);
     id = IDCounter++;
 }
 

@@ -70,18 +70,43 @@ TEST_CASE("Benchmarking euler", "[benchmark]") {
         particles = solver.solve(particles);
     }
 
-    particles = particleBuilder.build(1000);
-    BENCHMARK("Benchmarking with 1000 particles") {
+    particles = particleBuilder.build(200);
+    BENCHMARK("Benchmarking with 200 particles") {
         particles = solver.solve(particles);
     }
 
-    particles = particleBuilder.build(10000);
-    BENCHMARK("Benchmarking with 10K particles") {
+    particles = particleBuilder.build(400);
+    BENCHMARK("Benchmarking with 400 particles") {
         particles = solver.solve(particles);
     }
 
-    particles = particleBuilder.build(100000);
-    BENCHMARK("Benchmarking with 100K particles") {
+    particles = particleBuilder.build(800);
+    BENCHMARK("Benchmarking with 800 particles") {
+        particles = solver.solve(particles);
+    }
+
+    particles = particleBuilder.build(1600);
+    BENCHMARK("Benchmarking with 1.6K particles") {
+        particles = solver.solve(particles);
+    }
+
+    particles = particleBuilder.build(3200);
+    BENCHMARK("Benchmarking with 3.2K particles") {
+        particles = solver.solve(particles);
+    }
+
+    particles = particleBuilder.build(6400);
+    BENCHMARK("Benchmarking with 6.4K particles") {
+        particles = solver.solve(particles);
+    }
+
+    particles = particleBuilder.build(12800);
+    BENCHMARK("Benchmarking with 12.8K particles") {
+        particles = solver.solve(particles);
+    }
+
+    particles = particleBuilder.build(25600);
+    BENCHMARK("Benchmarking with 25.6K particles") {
         particles = solver.solve(particles);
     }
 }

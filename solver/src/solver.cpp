@@ -3,6 +3,7 @@
 #include <cmath>
 #include <algorithm>
 #include <solver.h>
+#include <cassert>
 
 
 const double Solver::G = 6.67408e-11;
@@ -76,6 +77,8 @@ Particle Solver::AccumulateAcceleration(const std::vector<Particle> &particles, 
 
 double Solver::CalculateEquivalentMass(const Particle &particleA, const Particle &particleB) {
     const double massA = particleA.getMass();
+    assert(massA > 0);
+
     const double massB = particleB.getMass();
 
     return massA*massB/massA;

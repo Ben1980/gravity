@@ -2,7 +2,7 @@
 
 #include <cmath>
 #include <types.h>
-#include <assert.h>
+#include <cassert>
 #include <limits>
 
 bool Vector2D::operator==(const Vector2D &rhs) const {
