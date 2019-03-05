@@ -69,17 +69,19 @@ TEST_CASE("Benchmarking euler", "[benchmark]") {
     BENCHMARK("Benchmarking with 100 particles") {
         particles = solver.solve(particles);
     }
-    REQUIRE(true);
 
     particles = particleBuilder.build(1000);
     BENCHMARK("Benchmarking with 1000 particles") {
         particles = solver.solve(particles);
     }
-    REQUIRE(true);
 
     particles = particleBuilder.build(10000);
     BENCHMARK("Benchmarking with 10K particles") {
         particles = solver.solve(particles);
     }
-    REQUIRE(true);
+
+    particles = particleBuilder.build(100000);
+    BENCHMARK("Benchmarking with 100K particles") {
+        particles = solver.solve(particles);
+    }
 }
