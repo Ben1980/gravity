@@ -9,8 +9,7 @@ public:
     Particle();
     Particle(double mass, const Vector2D &acceleration, const Vector2D &velocity, const Vector2D &position);
 
-    bool operator==(const Particle &rhs) const;
-    bool operator!=(const Particle &rhs) const;
+    friend bool operator==(const Particle &lhs, const Particle &rhs);
 
     double getMass() const;
 
@@ -35,5 +34,8 @@ private:
     Vector2D velocity;
     Vector2D position;
 };
+
+bool operator==(const Particle &lhs, const Particle &rhs);
+bool operator!=(const Particle &lhs, const Particle &rhs);
 
 #endif

@@ -17,14 +17,6 @@ Particle::Particle(double mass, const Vector2D &acceleration, const Vector2D &ve
     id = IDCounter++;
 }
 
-bool Particle::operator==(const Particle &rhs) const {
-    return id == rhs.id;
-}
-
-bool Particle::operator!=(const Particle &rhs) const {
-    return !(rhs == *this);
-}
-
 const Vector2D &Particle::getAcceleration() const {
     return acceleration;
 }
@@ -51,4 +43,12 @@ void Particle::setPosition(const Vector2D &position) {
 
 double Particle::getMass() const {
     return mass;
+}
+
+bool operator==(const Particle &lhs, const Particle &rhs) {
+    return lhs.id == rhs.id;
+}
+
+bool operator!=(const Particle &lhs, const Particle &rhs) {
+    return !(lhs == rhs);
 }
