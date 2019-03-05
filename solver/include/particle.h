@@ -2,16 +2,38 @@
 #define PARTICLE_H
 
 #include "types.h"
+#include <cstdlib>
 
-struct Particle {
+class Particle {
+public:
+    Particle();
+    Particle(double mass, const Vector2D &acceleration, const Vector2D &velocity, const Vector2D &position);
+
+    bool operator==(const Particle &rhs) const;
+    bool operator!=(const Particle &rhs) const;
+
+    double getMass() const;
+
+    const Vector2D &getAcceleration() const;
+
+    void setAcceleration(const Vector2D &acceleration);
+
+    const Vector2D &getVelocity() const;
+
+    void setVelocity(const Vector2D &velocity);
+
+    const Vector2D &getPosition() const;
+
+    void setPosition(const Vector2D &position);
+
+private:
+    static size_t IDCounter;
+
+    size_t id;
     double mass;
     Vector2D acceleration;
     Vector2D velocity;
     Vector2D position;
-
-    Particle() : mass(0) {}
-    Particle(double mass, const Vector2D &acceleration, const Vector2D &velocity, const Vector2D &position)
-        : mass(mass), acceleration(acceleration), velocity(velocity), position(position) {}
 };
 
 #endif

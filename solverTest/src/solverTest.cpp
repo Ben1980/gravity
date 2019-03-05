@@ -7,8 +7,7 @@
 
 double Inverse(double value) { return -value; }
 
-Particle GenerateStandardParticle(double xPosition, double yPosition)
-{
+Particle GenerateStandardParticle(double xPosition, double yPosition) {
     ParticleBuilder particleBuilder;
 
     return particleBuilder
@@ -17,9 +16,9 @@ Particle GenerateStandardParticle(double xPosition, double yPosition)
             .build();
 }
 
-TEST_CASE( "Explicit euler algorithm with two point mass", "[euler]" )
-{
-    Solver solver;
+TEST_CASE( "Explicit euler algorithm with two point mass", "[euler]" ) {
+    const double EPSILON = 0.1;
+    Solver solver(EPSILON);
 
     const std::vector<Particle> particlesX = { GenerateStandardParticle(0.5, 0),
                                                GenerateStandardParticle(-0.5, 0)};
@@ -27,38 +26,87 @@ TEST_CASE( "Explicit euler algorithm with two point mass", "[euler]" )
     const std::vector<Particle> particlesY = { GenerateStandardParticle(0, 0.5),
                                                GenerateStandardParticle(0, -0.5)};
 
-    const double EPSILON = 1e-3;
-
     //Solution
     const double acceleration = -0.6674079993; //m/s^2
     const double velocity = -0.06674079993; //m/s
     const double position = 0.48665184; //m
 
     SECTION( "Two still standing point mass are attracting each other in x-direction" ) {
-        std::vector<Particle> result = solver.solve(particlesX, EPSILON);
+        std::vector<Particle> result = solver.solve(particlesX);
 
         Particle &particle = result.front();
-        REQUIRE(particle.acceleration.x == Approx(acceleration));
-        REQUIRE(particle.velocity.x == Approx(velocity));
-        REQUIRE(particle.position.x == Approx(position));
+        CHECK(particle.getAcceleration().x == Approx(acceleration));
+        CHECK(particle.getVelocity().x == Approx(velocity));
+        CHECK(particle.getPosition().x == Approx(position));
 
         particle = result.back();
-        REQUIRE(particle.acceleration.x == Approx(Inverse(acceleration)));
-        REQUIRE(particle.velocity.x == Approx(Inverse(velocity)));
-        REQUIRE(particle.position.x == Approx(Inverse(position)));
+        CHECK(particle.getAcceleration().x == Approx(Inverse(acceleration)));
+        CHECK(particle.getVelocity().x == Approx(Inverse(velocity)));
+        REQUIRE(particle.getPosition().x == Approx(Inverse(position)));
     }
 
     SECTION( "Two still standing point mass are attracting each other in y-direction" ) {
-        std::vector<Particle> result = solver.solve(particlesY, EPSILON);
+        std::vector<Particle> result = solver.solve(particlesY);
 
         Particle &particle = result.front();
-        REQUIRE(particle.acceleration.y == Approx(acceleration));
-        REQUIRE(particle.velocity.y == Approx(velocity));
-        REQUIRE(particle.position.y == Approx(position));
+        CHECK(particle.getAcceleration().y == Approx(acceleration));
+        CHECK(particle.getVelocity().y == Approx(velocity));
+        CHECK(particle.getPosition().y == Approx(position));
 
         particle = result.back();
-        REQUIRE(particle.acceleration.y == Approx(Inverse(acceleration)));
-        REQUIRE(particle.velocity.y == Approx(Inverse(velocity)));
-        REQUIRE(particle.position.y == Approx(Inverse(position)));
+        CHECK(particle.getAcceleration().y == Approx(Inverse(acceleration)));
+        CHECK(particle.getVelocity().y == Approx(Inverse(velocity)));
+        REQUIRE(particle.getPosition().y == Approx(Inverse(position)));
+    }
+}
+
+TEST_CASE("Benchmarking euler", "[benchmark]") {
+    const double EPSILON = 0.1;
+    Solver solver(EPSILON);
+
+    ParticleBuilder particleBuilder;
+    std::vector<Particle> particles = particleBuilder.build(100);
+    BENCHMARK("Benchmarking with 100 particles") {
+        particles = solver.solve(particles);
+    }
+
+    particles = particleBuilder.build(200);
+    BENCHMARK("Benchmarking with 200 particles") {
+        particles = solver.solve(particles);
+    }
+
+    particles = particleBuilder.build(400);
+    BENCHMARK("Benchmarking with 400 particles") {
+        particles = solver.solve(particles);
+    }
+
+    particles = particleBuilder.build(800);
+    BENCHMARK("Benchmarking with 800 particles") {
+        particles = solver.solve(particles);
+    }
+
+    particles = particleBuilder.build(1600);
+    BENCHMARK("Benchmarking with 1.6K particles") {
+        particles = solver.solve(particles);
+    }
+
+    particles = particleBuilder.build(3200);
+    BENCHMARK("Benchmarking with 3.2K particles") {
+        particles = solver.solve(particles);
+    }
+
+    particles = particleBuilder.build(6400);
+    BENCHMARK("Benchmarking with 6.4K particles") {
+        particles = solver.solve(particles);
+    }
+
+    particles = particleBuilder.build(12800);
+    BENCHMARK("Benchmarking with 12.8K particles") {
+        particles = solver.solve(particles);
+    }
+
+    particles = particleBuilder.build(25600);
+    BENCHMARK("Benchmarking with 25.6K particles") {
+        particles = solver.solve(particles);
     }
 }
