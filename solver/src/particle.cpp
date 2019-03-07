@@ -1,19 +1,10 @@
 #include "particle.h"
-#include <random>
-#include <functional>
-#include <chrono>
 #include <cassert>
 
 size_t Particle::IDCounter = 0;
 
-Particle::Particle()
-    : mass(0) {
-    id = IDCounter++;
-}
-
 Particle::Particle(double mass, const Vector2D &acceleration, const Vector2D &velocity, const Vector2D &position)
         : mass(mass), acceleration(acceleration), velocity(velocity), position(position) {
-    assert(mass > 0);
     id = IDCounter++;
 }
 
@@ -43,12 +34,4 @@ void Particle::setPosition(const Vector2D &position) {
 
 double Particle::getMass() const {
     return mass;
-}
-
-bool operator==(const Particle &lhs, const Particle &rhs) {
-    return lhs.id == rhs.id;
-}
-
-bool operator!=(const Particle &lhs, const Particle &rhs) {
-    return !(lhs == rhs);
 }

@@ -1,7 +1,6 @@
 #include <catch.hpp>
 #include "solver.h"
 #include "particle.h"
-
 #include "particleBuilder.h"
 #include <vector>
 
@@ -35,28 +34,28 @@ TEST_CASE( "Explicit euler algorithm with two point mass", "[euler]" ) {
         std::vector<Particle> result = solver.solve(particlesX);
 
         Particle &particle = result.front();
-        CHECK(particle.getAcceleration().x == Approx(acceleration));
-        CHECK(particle.getVelocity().x == Approx(velocity));
-        CHECK(particle.getPosition().x == Approx(position));
+        CHECK(particle.getAcceleration()[Coordinate::X] == Approx(acceleration));
+        CHECK(particle.getVelocity()[Coordinate::X] == Approx(velocity));
+        CHECK(particle.getPosition()[Coordinate::X] == Approx(position));
 
         particle = result.back();
-        CHECK(particle.getAcceleration().x == Approx(Inverse(acceleration)));
-        CHECK(particle.getVelocity().x == Approx(Inverse(velocity)));
-        REQUIRE(particle.getPosition().x == Approx(Inverse(position)));
+        CHECK(particle.getAcceleration()[Coordinate::X] == Approx(Inverse(acceleration)));
+        CHECK(particle.getVelocity()[Coordinate::X] == Approx(Inverse(velocity)));
+        REQUIRE(particle.getPosition()[Coordinate::X] == Approx(Inverse(position)));
     }
 
     SECTION( "Two still standing point mass are attracting each other in y-direction" ) {
         std::vector<Particle> result = solver.solve(particlesY);
 
         Particle &particle = result.front();
-        CHECK(particle.getAcceleration().y == Approx(acceleration));
-        CHECK(particle.getVelocity().y == Approx(velocity));
-        CHECK(particle.getPosition().y == Approx(position));
+        CHECK(particle.getAcceleration()[Coordinate::Y] == Approx(acceleration));
+        CHECK(particle.getVelocity()[Coordinate::Y] == Approx(velocity));
+        CHECK(particle.getPosition()[Coordinate::Y] == Approx(position));
 
         particle = result.back();
-        CHECK(particle.getAcceleration().y == Approx(Inverse(acceleration)));
-        CHECK(particle.getVelocity().y == Approx(Inverse(velocity)));
-        REQUIRE(particle.getPosition().y == Approx(Inverse(position)));
+        CHECK(particle.getAcceleration()[Coordinate::Y] == Approx(Inverse(acceleration)));
+        CHECK(particle.getVelocity()[Coordinate::Y] == Approx(Inverse(velocity)));
+        REQUIRE(particle.getPosition()[Coordinate::Y] == Approx(Inverse(position)));
     }
 }
 

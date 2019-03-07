@@ -4,7 +4,6 @@ add_library(solver
         include/particleBuilder.h
         src/particleBuilder.cpp
         include/types.h
-        src/types.cpp
         src/particle.cpp)
 
 target_include_directories(solver 

@@ -6,10 +6,13 @@
 
 class Particle {
 public:
-    Particle();
-    Particle(double mass, const Vector2D &acceleration, const Vector2D &velocity, const Vector2D &position);
+    Particle(double mass = 0, const Vector2D &acceleration = { 0, 0 }, const Vector2D &velocity = { 0, 0 }, const Vector2D &position = { 0, 0 });
 
     friend bool operator==(const Particle &lhs, const Particle &rhs);
+
+    size_t getID() const {
+        return id;
+    }
 
     double getMass() const;
 
@@ -35,7 +38,13 @@ private:
     Vector2D position;
 };
 
-bool operator==(const Particle &lhs, const Particle &rhs);
-bool operator!=(const Particle &lhs, const Particle &rhs);
+inline bool operator==(const Particle &lhs, const Particle &rhs) {
+    return lhs.getID() == rhs.getID();
+}
+
+inline bool operator!=(const Particle &lhs, const Particle &rhs) {
+    return !(lhs == rhs);
+}
+
 
 #endif

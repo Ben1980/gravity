@@ -1,6 +1,7 @@
 #include "particleBuilder.h"
 #include "particle.h"
 #include <random>
+#include <functional>
 
 ParticleBuilder & ParticleBuilder::position(const Vector2D &position)
 {
@@ -37,12 +38,13 @@ std::vector<Particle> ParticleBuilder::build(size_t numberOfParticles)
 
     std::mt19937 mt(std::random_device{}());
     std::uniform_real_distribution real_dist(1.0, static_cast<double>(numberOfParticles));
+    auto gen = std::bind(std::ref(real_dist), std::ref(mt));
 
     for(Particle &p : particle) {
-        p = mass(real_dist(mt))
-                .acceleration({ real_dist(mt), real_dist(mt) })
-                .velocity({ real_dist(mt), real_dist(mt) })
-                .position({ real_dist(mt), real_dist(mt) })
+        p = mass(gen())
+                .acceleration({ gen(), gen() })
+                .velocity({ gen(), gen() })
+                .position({ gen(), gen() })
                 .build();
     }
 

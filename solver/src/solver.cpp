@@ -2,53 +2,26 @@
 #include "particle.h"
 #include <cmath>
 #include <algorithm>
-#include <solver.h>
 #include <cassert>
 
-
 const double Solver::G = 6.67408e-11;
-const double Solver::EPSILON = 1e-3;
+const double Solver::EPSILON3 = 1e-9;
 
 Solver::Solver(double mEpsilon) : mEpsilon(mEpsilon) {}
 
 std::vector<Particle> Solver::solve(const std::vector<Particle> &particles) const {
-    std::vector<Particle> solution = calculateAcceleration(particles);
-    solution = calculateVelocity(solution);
-    solution = calculatePosition(solution);
-
-    return solution;
-}
-
-std::vector<Particle> Solver::calculateAcceleration(const std::vector<Particle> &particles) const {
     std::vector<Particle> solution(particles.size());
 
-    std::transform(begin(particles), end(particles), begin(solution), [&particles](const Particle &particle) {
-        return AccumulateAcceleration(particles, particle);
-    });
+    const double epsilon2 = mEpsilon*mEpsilon;
+    std::transform(begin(particles), end(particles), begin(solution), [&particles, epsilon2, epsilon = mEpsilon](Particle particle) {
+        particle = AccumulateAcceleration(particles, particle);
 
-    return solution;
-}
-
-std::vector<Particle> Solver::calculateVelocity(const std::vector<Particle> &particles) const {
-    std::vector<Particle> solution(particles.size());
-
-    std::transform(begin(particles), end(particles), begin(solution), [epsilon = mEpsilon](Particle particle) {
         const Vector2D v0 = particle.getVelocity();
         particle.setVelocity(v0 + particle.getAcceleration()*epsilon);
 
-        return particle;
-    });
-
-    return solution;
-}
-
-std::vector<Particle> Solver::calculatePosition(const std::vector<Particle> &particles) const {
-    std::vector<Particle> solution(particles.size());
-
-    std::transform(begin(particles), end(particles), begin(solution), [epsilon = mEpsilon](Particle particle) {
         const Vector2D v = particle.getVelocity();
         const Vector2D r0 = particle.getPosition();
-        particle.setPosition(r0 + v*epsilon + particle.getAcceleration()*epsilon*epsilon);
+        particle.setPosition(r0 + v*epsilon + particle.getAcceleration()*epsilon2);
 
         return particle;
     });
@@ -56,23 +29,20 @@ std::vector<Particle> Solver::calculatePosition(const std::vector<Particle> &par
     return solution;
 }
 
-Particle Solver::AccumulateAcceleration(const std::vector<Particle> &particles, const Particle &particle) {
-    Particle particleA = particle;
-    const double e3 = EPSILON*EPSILON*EPSILON;
-
-    std::for_each(begin(particles), end(particles), [&particleA, e3](const Particle &particleB) {
-        if(particleA != particleB) {
-            const double M = CalculateEquivalentMass(particleA, particleB);
-            const Vector2D r = particleB.getPosition() - particleA.getPosition();
+Particle Solver::AccumulateAcceleration(const std::vector<Particle> &particles, Particle particle) {
+    std::for_each(begin(particles), end(particles), [&particle](const Particle &particleB) {
+        if(particle != particleB) {
+            const double M = CalculateEquivalentMass(particle, particleB);
+            const Vector2D r = particleB.getPosition() - particle.getPosition();
             const double rLength = r.length();
             const double r3 = fabs(rLength*rLength*rLength);
 
-            const Vector2D a0 = particleA.getAcceleration();
-            particleA.setAcceleration(a0 + G*M*r/(r3 + e3));
+            const Vector2D a0 = particle.getAcceleration();
+            particle.setAcceleration(a0 + G*M*r/(r3 + EPSILON3));
         }
     });
 
-    return particleA;
+    return particle;
 }
 
 double Solver::CalculateEquivalentMass(const Particle &particleA, const Particle &particleB) {
