@@ -1,6 +1,6 @@
 set title "Calculation time of Euler-Method"
 set auto x
-set yrange [0:46714.9]
+set yrange [0:9850.59]
 set style data histogram
 set style histogram cluster gap 1
 set style fill solid border -1
