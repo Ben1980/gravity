@@ -1,8 +1,9 @@
 #include "solver.h"
 #include "particle.h"
 #include <cmath>
-#include <algorithm>
 #include <cassert>
+#include <pstl/execution>
+#include <pstl/algorithm>
 
 const double Solver::G = 6.67408e-11;
 const double Solver::EPSILON3 = 1e-9;
@@ -10,11 +11,10 @@ const double Solver::EPSILON3 = 1e-9;
 Solver::Solver(double mEpsilon) : mEpsilon(mEpsilon) {}
 
 std::vector<Particle> Solver::solve(const std::vector<Particle> &particles) const {
-    std::vector<Particle> solution;
-    solution.reserve(particles.size());
+    std::vector<Particle> solution(particles.size());
 
     const double epsilon2 = mEpsilon*mEpsilon;
-    std::transform(begin(particles), end(particles), std::back_inserter(solution), [&particles, epsilon2, epsilon = mEpsilon](Particle particle) {
+    std::transform(pstl::execution::par_unseq, begin(particles), end(particles), begin(solution), [&particles, epsilon2, epsilon = mEpsilon](Particle particle) {
         particle = AccumulateAcceleration(particles, particle);
 
         const Vector2D v0 = particle.getVelocity();
