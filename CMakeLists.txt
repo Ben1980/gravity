@@ -4,7 +4,7 @@ if(${CMAKE_VERSION} VERSION_LESS 3.12)
     cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 endif()
 
-project(gravity VERSION 0.4.0
+project(gravity VERSION 0.5.0
     DESCRIPTION "N-Body-Problem project of https://thoughts-on-cpp.com"
     LANGUAGES CXX)
 
