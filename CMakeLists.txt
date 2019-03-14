@@ -12,7 +12,8 @@ add_library(Catch2 INTERFACE)
 target_include_directories(Catch2 INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/extern/catch2)
 
 include(CTest)
-add_subdirectory(solver solver)
-add_subdirectory(solverTest solverTest)
+add_subdirectory(app)
+add_subdirectory(solver)
+add_subdirectory(solverTest)
 
-set_property(TARGET solver solverTest PROPERTY CXX_STANDARD 17)
+#set_property(TARGET app solver solverTest PROPERTY CXX_STANDARD 17)
