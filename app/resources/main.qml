@@ -23,13 +23,19 @@ Window {
     Button {
         id: randomizer
         text: qsTr("Randomize")
-        onClicked: model.submit()
+        onClicked: {
+            randomizerText.color = "#21be2b"
+            randomizerBackground.border.color = "#21be2b"
+            nbpValue.color = "#21be2b"
+            controller.randomizeClicked("Worked?")
+        }
 
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: 20
 
         contentItem: Text {
+            id: randomizerText
             text: randomizer.text
             font: randomizer.font
             color: randomizer.down ? "#17a81a" : "#21be2b"
@@ -39,6 +45,7 @@ Window {
         }
 
         background: Rectangle {
+            id: randomizerBackground
             implicitWidth: 100
             implicitHeight: 40
             color: "Transparent"
@@ -49,30 +56,35 @@ Window {
     }
 
     Slider {
-        id: control
+        id: slider
         value: 200
         from: 100
         to: 1000
         snapMode: Slider.SnapAlways
         stepSize: 100
-        onMoved: model.submit()
+        onMoved: {
+            randomizerText.color = "#e63900"
+            randomizerBackground.border.color = "#e63900"
+            nbpValue.text = value
+            nbpValue.color = "#e63900"
+        }
 
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.margins: 20
 
         background: Rectangle {
-            x: control.leftPadding
-            y: control.topPadding + control.availableHeight / 2 - height / 2
+            x: slider.leftPadding
+            y: slider.topPadding + slider.availableHeight / 2 - height / 2
             implicitWidth: window.width - randomizer.width - 60
             implicitHeight: 4
-            width: control.availableWidth
+            width: slider.availableWidth
             height: implicitHeight
             radius: 2
             color: "#bdbebf"
 
             Rectangle {
-                width: control.visualPosition * parent.width
+                width: slider.visualPosition * parent.width
                 height: parent.height
                 color: "#21be2b"
                 radius: 2
@@ -80,12 +92,12 @@ Window {
         }
 
         handle: Rectangle {
-            x: control.leftPadding + control.visualPosition * (control.availableWidth - width)
-            y: control.topPadding + control.availableHeight / 2 - height / 2
+            x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
+            y: slider.topPadding + slider.availableHeight / 2 - height / 2
             implicitWidth: 26
             implicitHeight: 26
             radius: 13
-            color: control.pressed ? "#f0f0f0" : "#f6f6f6"
+            color: slider.pressed ? "#f0f0f0" : "#f6f6f6"
             border.color: "#bdbebf"
         }
     }
@@ -117,7 +129,7 @@ Window {
     Label {
         id: nbpValue
         font.pixelSize: 15
-        text: qsTr("1000")
+        text: slider.value
         color: "#21be2b"
 
         anchors.left: nbpText.right

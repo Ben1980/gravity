@@ -1,5 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <controller.h>
 #include "viewer.h"
 
 int main(int argc, char *argv[])
@@ -15,5 +17,8 @@ int main(int argc, char *argv[])
     if (engine.rootObjects().isEmpty())
         return -1;
 
-    return app.exec();
+    Controller controller;
+    engine.rootContext()->setContextProperty("controller", &controller);
+
+    return QGuiApplication::exec();
 }

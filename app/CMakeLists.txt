@@ -8,7 +8,7 @@ find_package(Qt5 COMPONENTS Core Quick REQUIRED)
 
 add_executable(${PROJECT_NAME}
         src/main.cpp
-        resources/qml.qrc include/viewer.h src/viewer.cpp)
+        resources/qml.qrc include/viewer.h src/viewer.cpp include/controller.h src/controller.cpp)
 
 target_include_directories(${PROJECT_NAME}
         PRIVATE
