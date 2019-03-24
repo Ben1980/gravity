@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Viewer 1.0
 
 Window {
@@ -24,10 +25,7 @@ Window {
         id: randomizer
         text: qsTr("Randomize")
         onClicked: {
-            randomizerText.color = "#21be2b"
-            randomizerBackground.border.color = "#21be2b"
-            nbpValue.color = "#21be2b"
-            controller.randomizeClicked("Worked?")
+            calculationSettings.open()
         }
 
         anchors.right: parent.right
@@ -104,7 +102,7 @@ Window {
 
     Label {
         id: nbpText
-        font.pixelSize: 15
+        font.pointSize: 13
         text: qsTr("Number Of Particles:")
         color: "#21be2b"
 
@@ -114,7 +112,7 @@ Window {
     }
     Label {
         id: cpsText
-        font.pixelSize: 15
+        font.pointSize: 13
         text: qsTr("Calculations per Second:")
         color: "#21be2b"
 
@@ -123,12 +121,9 @@ Window {
         anchors.margins: 10
     }
 
-    property alias nbp: nbpValue.text
-    property alias cps: cpsValue.text
-
     Label {
         id: nbpValue
-        font.pixelSize: 15
+        font.pointSize: 13
         text: slider.value
         color: "#21be2b"
 
@@ -138,12 +133,77 @@ Window {
     }
     Label {
         id: cpsValue
-        font.pixelSize: 15
+        font.pointSize: 13
         text: qsTr("100")
         color: "#21be2b"
 
         anchors.left: cpsText.right
         anchors.top: nbpValue.bottom
         anchors.margins: 10
+    }
+
+    Dialog {
+        id: calculationSettings
+        title: "Calculation Settings"
+        modal: true
+
+        implicitWidth: 300
+        implicitHeight: 200
+
+        anchors.centerIn: parent
+
+        property double epsilon : 0.01
+        property int numberOfTimesteps : 1000
+
+        contentItem:ColumnLayout {
+            implicitWidth: calculationSettings.width
+
+            RowLayout {
+                Layout.fillWidth: true
+
+                Label {
+                    font.pointSize: 13
+                    text: qsTr("Timestep Size:")
+                }
+                TextInput {
+                    id: epsilonInput
+                    validator: DoubleValidator{bottom: 0.01;}
+                    focus: true
+                    font.pointSize: 13
+                    text: calculationSettings.epsilon
+                    cursorVisible: false
+                }
+                Label {
+                    font.pointSize: 13
+                    text: "S"
+                }
+            }
+            RowLayout {
+                Layout.fillWidth: true
+
+                Label {
+                    font.pointSize: 13
+                    text: qsTr("Number of Timesteps:")
+                }
+                TextInput {
+                    id: nbTimestepsInput
+                    validator: IntValidator{bottom: 2;}
+                    font.pointSize: 13
+                    text: calculationSettings.numberOfTimesteps
+                    cursorVisible: false
+                }
+            }
+        }
+
+        footer: DialogButtonBox {
+            standardButtons: DialogButtonBox.Ok | DialogButtonBox.Cancel
+
+            onAccepted: {
+                randomizerText.color = "#21be2b"
+                randomizerBackground.border.color = "#21be2b"
+                nbpValue.color = "#21be2b"
+                controller.randomizeClicked(slider.value, calculationSettings.numberOfTimesteps, calculationSettings.epsilon)
+            }
+        }
     }
 }

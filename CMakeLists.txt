@@ -8,12 +8,15 @@ project(gravity VERSION 0.5.0
     DESCRIPTION "N-Body-Problem project of https://thoughts-on-cpp.com"
     LANGUAGES CXX)
 
-add_library(Catch2 INTERFACE)
-target_include_directories(Catch2 INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/extern/catch2)
+#find_package(Catch2 CONFIG REQUIRED)
+#target_link_libraries(main PRIVATE Catch2::Catch2)
+
+#add_library(Catch2 INTERFACE)
+#target_include_directories(Catch2 INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/extern/catch2)
 
 include(CTest)
 add_subdirectory(app)
 add_subdirectory(solver)
 add_subdirectory(solverTest)
 
-#set_property(TARGET app solver solverTest PROPERTY CXX_STANDARD 17)
+set_property(TARGET app solver solverTest PROPERTY CXX_STANDARD 17)

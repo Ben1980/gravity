@@ -2,10 +2,15 @@
 
 #include <iostream>
 
-Controller::Controller(QObject *parent)
-    : QObject(parent)
-{}
 
-void Controller::randomizeClicked(const QString &txt) {
-    std::cout << txt.toStdString() << std::endl;
+Controller::Controller(double epsilon, QObject *parent)
+    : QObject(parent)//, mSolver(std::make_unique<Solver>(epsilon))
+{
+
+}
+
+void Controller::randomizeClicked(int numberOfParticles, int numberOfSteps, double epsilon) {
+    std::cout << numberOfParticles << std::endl;
+    std::cout << numberOfSteps << std::endl;
+    std::cout << epsilon << std::endl;
 }
