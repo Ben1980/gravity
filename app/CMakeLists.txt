@@ -12,7 +12,5 @@ target_include_directories(app
         PRIVATE
         include)
 
-#target_compile_options(app PRIVATE "/std:c++latest")
-
 target_compile_definitions(app PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(app PRIVATE Qt5::Core Qt5::Quick)

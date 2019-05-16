@@ -1,7 +1,7 @@
-import QtQuick 2.12
-import QtQuick.Window 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
+import QtQuick 2.11
+import QtQuick.Window 2.3
+import QtQuick.Controls 2.4
+import QtQuick.Layouts 1.11
 import Viewer 1.0
 
 Window {
@@ -150,7 +150,9 @@ Window {
         implicitWidth: 300
         implicitHeight: 200
 
-        anchors.centerIn: parent
+        x: (window.width - width) / 2
+        y: (window.height - height) / 2
+        parent: ApplicationWindow.overlay
 
         property double epsilon : 0.01
         property int numberOfTimesteps : 1000
