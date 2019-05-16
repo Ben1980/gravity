@@ -2,8 +2,8 @@
 #include "particle.h"
 #include <cmath>
 #include <cassert>
-#include <pstl/execution>
-#include <pstl/algorithm>
+#include <include/pstl/execution>
+#include <include/pstl/algorithm>
 
 const double Solver::G = 6.67408e-11;
 const double Solver::EPSILON3 = 1e-9;

@@ -6,14 +6,14 @@ add_library(solver
         include/types.h
         src/particle.cpp)
 
-#list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/extern/tbb")
+find_package(Threads)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/extern/pstl")
 
 find_package(TBB CONFIG REQUIRED)
-target_link_libraries(solver PRIVATE TBB::tbb)
+target_link_libraries(solver PRIVATE TBB::tbb ${CMAKE_THREAD_LIBS_INIT})
 
 target_include_directories(solver
         PUBLIC
-        include)
-
-#target_link_libraries(solver
-#        ${TBB_LIBRARIES})
+        include
+        ${CMAKE_SOURCE_DIR}/extern/pstl)
