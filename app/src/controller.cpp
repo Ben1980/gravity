@@ -1,16 +1,27 @@
 #include "controller.h"
 
-#include <iostream>
+#include "../../solver/include/solver.h"
+#include "../../solver/include/particleBuilder.h"
 
-
-Controller::Controller(double epsilon, QObject *parent)
-    : QObject(parent)//, mSolver(std::make_unique<Solver>(epsilon))
+Controller::Controller(QObject *parent)
+    : QObject(parent)
 {
-
 }
 
 void Controller::randomizeClicked(int numberOfParticles, int numberOfSteps, double epsilon) {
-    std::cout << numberOfParticles << std::endl;
-    std::cout << numberOfSteps << std::endl;
-    std::cout << epsilon << std::endl;
+    mParticles = generateParticles(numberOfParticles, numberOfSteps);
+
+    Solver solver(epsilon);
+
+    for(int step = 1; step < numberOfSteps; step++) {
+        mParticles[step] = solver.solve(mParticles[step - 1]);
+    }
+}
+
+std::vector<std::vector<Particle>> Controller::generateParticles(int numberOfParticles, int numberOfSteps) const {
+    std::vector<std::vector<Particle>> particles(numberOfSteps);
+
+    particles.front() = ParticleBuilder().build(numberOfParticles);
+
+    return particles;
 }

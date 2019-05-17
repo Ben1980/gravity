@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     if (engine.rootObjects().isEmpty())
         return -1;
 
-    Controller controller(0.01);
+    Controller controller;
     engine.rootContext()->setContextProperty("controller", &controller);
 
     return QGuiApplication::exec();
