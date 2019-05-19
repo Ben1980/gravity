@@ -13,11 +13,10 @@ public:
 
 public slots:
     void randomizeClicked(int numberOfParticles, int numberOfSteps, double epsilon);
+    std::vector<Particle> getParticles() const { return mParticles; }
 
 private:
-    std::vector<std::vector<Particle>> generateParticles(int numberOfParticles, int numberOfSteps) const;
-
-    std::vector<std::vector<Particle>> mParticles;
+    std::vector<Particle> mParticles;
 };
 
 #endif

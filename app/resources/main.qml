@@ -2,7 +2,7 @@ import QtQuick 2.11
 import QtQuick.Window 2.3
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.11
-import Viewer 1.0
+import ParticleViewer 1.0
 
 Window {
     id: window
@@ -11,7 +11,7 @@ Window {
     height: 480
     title: qsTr("Gravity")
 
-    Squircle {
+    ParticleViewer {
         id: view
         SequentialAnimation on t {
             NumberAnimation { to: 1; duration: 2500; easing.type: Easing.InQuad }
@@ -204,7 +204,7 @@ Window {
                 randomizerText.color = "#21be2b"
                 randomizerBackground.border.color = "#21be2b"
                 nbpValue.color = "#21be2b"
-                controller.randomizeClicked(slider.value, calculationSettings.numberOfTimesteps, calculationSettings.epsilon)
+                view.randomizeClicked(slider.value, calculationSettings.numberOfTimesteps, calculationSettings.epsilon)
             }
         }
     }

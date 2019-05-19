@@ -2,6 +2,7 @@
 
 #include "../../solver/include/solver.h"
 #include "../../solver/include/particleBuilder.h"
+#include <iterator>
 
 Controller::Controller(QObject *parent)
     : QObject(parent)
@@ -9,19 +10,13 @@ Controller::Controller(QObject *parent)
 }
 
 void Controller::randomizeClicked(int numberOfParticles, int numberOfSteps, double epsilon) {
-    mParticles = generateParticles(numberOfParticles, numberOfSteps);
+    std::vector<Particle> particles = ParticleBuilder().build(numberOfParticles);
+    mParticles.reserve(numberOfParticles*numberOfSteps);
 
     Solver solver(epsilon);
 
-    for(int step = 1; step < numberOfSteps; step++) {
-        mParticles[step] = solver.solve(mParticles[step - 1]);
+    for(int step = 0; step < numberOfSteps; step++) {
+        mParticles.insert(mParticles.end(), particles.begin(), particles.end());
+        particles = solver.solve(particles);
     }
-}
-
-std::vector<std::vector<Particle>> Controller::generateParticles(int numberOfParticles, int numberOfSteps) const {
-    std::vector<std::vector<Particle>> particles(numberOfSteps);
-
-    particles.front() = ParticleBuilder().build(numberOfParticles);
-
-    return particles;
 }
