@@ -1,16 +1,14 @@
-cmake_minimum_required(VERSION 3.1...3.13)
+cmake_minimum_required(VERSION 3.1...3.14)
+project(gravity)
 
-if(${CMAKE_VERSION} VERSION_LESS 3.12)
-    cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
 endif()
 
-project(gravity VERSION 0.5.0
-    DESCRIPTION "N-Body-Problem project of https://thoughts-on-cpp.com"
-    LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -std=c++17 -O3")
 
 include(CTest)
 add_subdirectory(app)
 add_subdirectory(solver)
 add_subdirectory(solverTest)
-
-set_property(TARGET app solver solverTest PROPERTY CXX_STANDARD 17)

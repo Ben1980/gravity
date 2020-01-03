@@ -6,10 +6,10 @@ find_package(Qt5 COMPONENTS Core Quick REQUIRED)
 
 add_executable(app
         src/main.cpp
-        resources/qml.qrc
-        include/controller.h src/controller.cpp
-        include/particleViewer.h src/particleViewer.cpp
-        include/particleRenderer.h src/particleRenderer.cpp)
+        resources/qml.qrc)
+        #include/controller.h src/controller.cpp
+        #include/particleViewer.h src/particleViewer.cpp
+        #include/particleRenderer.h src/particleRenderer.cpp)
 
 target_include_directories(app
         PRIVATE
